@@ -1,0 +1,7 @@
+import configureProdStore from './configureStore.prod';
+import configureDevStore from './configureStore.dev';
+
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const storeData = IS_PRODUCTION ? configureProdStore() : configureDevStore();
+
+export default storeData;
