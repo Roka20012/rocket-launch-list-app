@@ -17,6 +17,7 @@ export type LaunchListState = {
 };
 
 const initialState: LaunchListState = {
+  // TODO: @Rostyk add type for launchList
   launchList: null,
   launchListPhase: REQUEST_PHASE.INIT,
   launchListError: null,
