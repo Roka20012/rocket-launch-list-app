@@ -93,7 +93,9 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
     setIsError,
   ]);
 
-  const goToLauchDetailScreen = () => navigation.navigate('LaunchDetailScreen');
+  const goToLauchDetailScreen = (
+    launchListItem: HomeScreenProps<'LaunchDetailScreen'>['route']['params'],
+  ) => navigation.navigate('LaunchDetailScreen', launchListItem);
 
   if (isLaunchListLoading)
     return <ActivityIndicator style={styles.activityIndicator} />;

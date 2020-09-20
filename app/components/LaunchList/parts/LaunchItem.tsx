@@ -10,7 +10,7 @@ import { COLORS, STYLES } from '~/app/common/style';
 
 export type LaunchItemProps = {
   item: LaunchListItemType;
-  onPress: () => void;
+  onPress: (launchListItem: LaunchListItemType) => void;
 };
 
 const LaunchItem = ({ item, onPress }: LaunchItemProps) => {
@@ -21,9 +21,11 @@ const LaunchItem = ({ item, onPress }: LaunchItemProps) => {
   } = item;
   const isStatusSuccess = statusName === 'Success';
 
+  const onPressCallback = () => onPress(item);
+
   return (
     <>
-      <TouchableOpacity style={styles.container} onPress={onPress}>
+      <TouchableOpacity style={styles.container} onPress={onPressCallback}>
         <View style={styles.contentContainer}>
           <Text style={styles.name}>{name}</Text>
           <LaunchStatus success={isStatusSuccess} name={statusName} />

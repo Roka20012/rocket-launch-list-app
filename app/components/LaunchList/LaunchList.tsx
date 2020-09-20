@@ -9,7 +9,7 @@ import { LaunchListType, LaunchListItemType } from '~/app/store/types';
 import { LaunchItem, LaunchListHeader, EmptyBox } from './parts';
 
 export type LaunchListProps = {
-  onPress: () => void;
+  onPress: (launchListItem: LaunchListItemType) => void;
   launchListItems?: LaunchListType['results'];
 };
 
