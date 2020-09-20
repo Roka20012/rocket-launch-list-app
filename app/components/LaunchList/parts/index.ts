@@ -1,3 +1,4 @@
+import LaunchListHeader from './LaunchListHeader';
 import LaunchItem from './LaunchItem';
 
-export { LaunchItem };
+export { LaunchListHeader, LaunchItem };

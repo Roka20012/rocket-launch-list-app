@@ -22,8 +22,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
 
     // opinions:
-    'max-lines-per-function': ['error', 90],
-    'max-lines': ['error', 300],
     '@typescript-eslint/no-unused-vars': 'off', // can be handy
     '@typescript-eslint/no-use-before-define': 'off',
     'react/jsx-props-no-spreading': 'off',
