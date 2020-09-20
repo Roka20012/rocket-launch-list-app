@@ -63,7 +63,7 @@ const LaunchDetailScreen = ({
         </View>
       )}
 
-      <Text style={styles.nameTitle}>Rocket 🚀</Text>
+      <Text style={[styles.nameTitle, styles.rocket]}>Rocket 🚀</Text>
       <Option title="Family" option={variant} />
       <Option title="Name" option={full_name} />
       <Option title="Variant" option={family} />
@@ -97,6 +97,9 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     ...STYLES.BODY_15_MEDIUM,
     color: COLORS.TEXT_MAIN,
+  },
+  rocket: {
+    marginTop: 5,
   },
   nameTitle: {
     marginBottom: 6,

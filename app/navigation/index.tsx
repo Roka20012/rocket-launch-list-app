@@ -6,7 +6,6 @@ import LaunchScreen from '~/app/containers/LaunchScreen';
 import LaunchDetailScreen from '~/app/containers/LaunchDetailScreen';
 
 import { RootStackParamList } from './types';
-import { COLORS } from '../common/style';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -18,6 +17,7 @@ export const RootStack = () => {
           name="LaunchScreen"
           component={LaunchScreen}
           options={{
+            title: 'Launch List',
             headerShown: false,
           }}
         />
