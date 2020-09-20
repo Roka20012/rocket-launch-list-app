@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ErrorMessage from '~/app/common/components/ErrorMessage';
+import { EmptyBox } from '~/app/components/LaunchList/parts';
 import LaunchList from '~/app/components/LaunchList';
 import { AppState } from '~/app/store/types';
 
@@ -18,8 +19,11 @@ import {
 } from '~/app/store/launchList/duck';
 
 import { REQUEST_PHASE } from '~/app/common/types';
+
 const launchListSelector = (state: AppState) =>
   state.launchListStore.launchList;
+const launchListItemsSelector = (state: AppState) =>
+  state.launchListStore.launchListItems;
 const launchListPhaseSelector = (state: AppState) =>
   state.launchListStore.launchListPhase;
 const launchListErrorSelector = (state: AppState) =>
@@ -29,12 +33,17 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const launchList = useSelector(launchListSelector);
+  const launchListItems = useSelector(launchListItemsSelector);
   const launchListPhase = useSelector(launchListPhaseSelector);
   const launchListError = useSelector(launchListErrorSelector);
 
   const [online, setOnline] = useState<OnlineStatusType>('checking-connection');
   const [isError, setIsError] = useState<boolean>(false);
   const [isLaunchListLoading, setIsLaunchListLoading] = useState<boolean>(true);
+  const [isLoadingMore, setisLoadingMore] = useState<boolean>(false);
+  const [isLaunchListRefresing, setIsLaunchListRefresing] = useState<boolean>(
+    false,
+  );
   let connectInterval: NodeJS.Timeout;
 
   const [websocket, setWebsocket] = useState<WebSocket>();
@@ -80,15 +89,21 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
 
   useEffect(() => {
     if (launchListPhase === REQUEST_PHASE.SUCCESS) {
+      setisLoadingMore(false);
       setIsLaunchListLoading(false);
+      setIsLaunchListRefresing(false);
       dispatch(getLaunchListFulfill());
     } else if (launchListPhase === REQUEST_PHASE.FAILURE) {
       setIsError(true);
+      setisLoadingMore(false);
       setIsLaunchListLoading(false);
+      setIsLaunchListRefresing(false);
     }
   }, [
+    setIsLaunchListRefresing,
     setIsLaunchListLoading,
     getLaunchListFulfill,
+    setisLoadingMore,
     launchListPhase,
     setIsError,
   ]);
@@ -97,18 +112,41 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
     launchListItem: HomeScreenProps<'LaunchDetailScreen'>['route']['params'],
   ) => navigation.navigate('LaunchDetailScreen', launchListItem);
 
+  const onRefreshLaunchList = () => {
+    setIsLaunchListRefresing(true);
+    dispatch(getLaunchList());
+  };
+
+  const onGetNewListItems = () => {
+    setIsLaunchListLoading(true);
+    dispatch(getLaunchList());
+  };
+
+  const getMoreListItems = () => {
+    console.log('onEndReached');
+    setisLoadingMore(true);
+    dispatch(getLaunchList(launchList?.next));
+  };
+
   if (isLaunchListLoading)
     return <ActivityIndicator style={styles.activityIndicator} />;
 
   if (isError) return <ErrorMessage message={launchListError?.detail} />;
+
+  if (!launchListItems.length)
+    return <EmptyBox onGetNewListItems={onGetNewListItems} />;
 
   return (
     <View style={[styles.container, { marginTop: insets.top }]}>
       <StatusBar barStyle="dark-content" />
       <OnlineStatus style={styles.onlineStatus} online={online} />
       <LaunchList
-        launchListItems={launchList?.results}
+        launchListItems={launchListItems}
+        refreshing={isLaunchListRefresing}
+        isLoadingMore={isLoadingMore}
         onPress={goToLauchDetailScreen}
+        onRefresh={onRefreshLaunchList}
+        onEndReached={getMoreListItems}
       />
     </View>
   );

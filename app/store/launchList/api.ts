@@ -1,17 +1,21 @@
+import Chance from 'chance';
 import client from '~/app/utils/apiInterceptor';
 
 import { LaunchListType } from '../types';
 
-export const getLaunchList = async (): Promise<LaunchListType> => {
+const chance = new Chance();
+
+export const getLaunchList = async (next?: string): Promise<LaunchListType> => {
   try {
-    const response = await client.get('launch/?limit=5');
-    const mockResponse = {
+    // TODO: uncomment when serve will be ok "Request was throttled. Expected available in 28575 seconds."
+    // const response = await client.get(next ? next : 'launch/?limit=5');
+    const mockResponse: LaunchListType = {
       count: 1839,
       next: 'https://ll.thespacedevs.com/2.0.0/launch/?limit=10&offset=20',
       previous: 'https://ll.thespacedevs.com/2.0.0/launch/?limit=10',
       results: [
         {
-          id: 'a2b07d66-8851-4880-8eee-95248c6e79f5',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/a2b07d66-8851-4880-8eee-95248c6e79f5/',
           launch_library_id: 1839,
@@ -81,7 +85,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
           program: [],
         },
         {
-          id: '8f46f0c6-b0b8-4440-bd54-d2be03511c78',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/8f46f0c6-b0b8-4440-bd54-d2be03511c78/',
           launch_library_id: 1840,
@@ -151,7 +155,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
           program: [],
         },
         {
-          id: 'b1a75709-2ff8-497d-aa70-51b38d441cd6',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/b1a75709-2ff8-497d-aa70-51b38d441cd6/',
           launch_library_id: 1841,
@@ -221,7 +225,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
           program: [],
         },
         {
-          id: '6abb4584-1ae8-4280-ab94-eec203164091',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/6abb4584-1ae8-4280-ab94-eec203164091/',
           launch_library_id: 1028,
@@ -327,7 +331,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
           ],
         },
         {
-          id: 'e1e4a144-47f8-489d-88ee-c41ae09cd0b7',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/e1e4a144-47f8-489d-88ee-c41ae09cd0b7/',
           launch_library_id: 1842,
@@ -421,7 +425,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
           ],
         },
         {
-          id: 'f5303aad-0672-4825-96d6-996d83d1e7f2',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/f5303aad-0672-4825-96d6-996d83d1e7f2/',
           launch_library_id: 1843,
@@ -492,7 +496,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
           program: [],
         },
         {
-          id: '9fe0c6ce-7858-4915-b4e3-7c93f8e56177',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/9fe0c6ce-7858-4915-b4e3-7c93f8e56177/',
           launch_library_id: null,
@@ -600,7 +604,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
           ],
         },
         {
-          id: 'baf048e4-c41b-4edc-aa61-70be2837acb4',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/baf048e4-c41b-4edc-aa61-70be2837acb4/',
           launch_library_id: 1844,
@@ -671,7 +675,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
           program: [],
         },
         {
-          id: 'd94bf87d-b0eb-4935-8143-e8749e424d5c',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/d94bf87d-b0eb-4935-8143-e8749e424d5c/',
           launch_library_id: 1845,
@@ -741,7 +745,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
           program: [],
         },
         {
-          id: '69c1757e-bb8f-4ce2-a29a-0a4aadb6a2c9',
+          id: chance.guid(),
           url:
             'https://ll.thespacedevs.com/2.0.0/launch/69c1757e-bb8f-4ce2-a29a-0a4aadb6a2c9/',
           launch_library_id: 1846,
@@ -813,8 +817,10 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
       ],
     };
 
-    return response.data;
-    // return mockResponse;
+    // return response.data;
+    return new Promise<LaunchListType>((resolve) => {
+      setTimeout(() => resolve(mockResponse), 2000);
+    });
   } catch (error) {
     throw error;
   }

@@ -93,11 +93,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingBottom: 32,
   },
-  name: {
-    marginBottom: 6,
-    ...STYLES.BODY_15_MEDIUM,
-    color: COLORS.TEXT_MAIN,
-  },
   rocket: {
     marginTop: 5,
   },

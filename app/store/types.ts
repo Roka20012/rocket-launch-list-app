@@ -6,6 +6,7 @@ export type AppState = {
 
 export type LaunchListStore = {
   launchList: LaunchListType | null;
+  launchListItems: Array<LaunchListItemType>;
   launchListPhase: REQUEST_PHASE;
   launchListError: LaunchListErrorType | null;
 };

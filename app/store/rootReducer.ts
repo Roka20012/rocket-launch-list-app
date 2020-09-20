@@ -6,5 +6,4 @@ const appReducer = combineReducers({
   launchListStore,
 });
 
-// TODO: @Rostyk add type for state
-export default (state, action: Action) => appReducer(state, action);
+export default (state: any, action: Action) => appReducer(state, action);
