@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ErrorMessage from '~/app/common/components/ErrorMessage';
@@ -22,6 +22,7 @@ const launchListPhaseSelector = (state: AppState) =>
 
 const LaunchScreen = () => {
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
   const launchList = useSelector(launchListSelector);
   const launchListPhase = useSelector(launchListPhaseSelector);
   const [isLaunchListLoading, setIsLaunchListLoading] = useState<boolean>(true);
@@ -50,13 +51,13 @@ const LaunchScreen = () => {
   if (isError) return <ErrorMessage />;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={[styles.container, { marginTop: insets.top }]}>
       {isLaunchListLoading ? (
         <ActivityIndicator style={styles.activityIndicator} />
       ) : (
         <LaunchList launchListItems={launchList?.results} />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

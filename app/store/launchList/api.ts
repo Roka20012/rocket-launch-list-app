@@ -4,7 +4,7 @@ import { LaunchListType } from '../types';
 
 export const getLaunchList = async (): Promise<LaunchListType> => {
   try {
-    const response = await client.get('launch/?limit=5');
+    // const response = await client.get('launch/?limit=5');
     const mockResponse = {
       count: 1839,
       next: 'https://ll.thespacedevs.com/2.0.0/launch/?limit=10&offset=20',
@@ -813,8 +813,8 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
       ],
     };
 
-    return response.data;
-    // return mockResponse;
+    // return response.data;
+    return mockResponse;
   } catch (error) {
     throw error;
   }å

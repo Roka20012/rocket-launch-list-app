@@ -1,7 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, FlatList } from 'react-native';
 
+import * as Animatable from 'react-native-animatable';
+
 import { STYLES } from '~/app/common/style';
+import { ANIMATABLE_CONFIG } from '~/app/common/constants';
 import { LaunchListType, LaunchListItemType } from '~/app/store/types';
 
 import { LaunchItem } from './parts';
@@ -18,11 +21,14 @@ const LaunchList = ({ launchListItems = [] }: LaunchListProps) => {
   return (
     <>
       <Text style={styles.listTitle}>Launch List</Text>
-      <FlatList
-        style={styles.list}
-        data={launchListItems}
-        renderItem={renderItem}
-      />
+      <Animatable.View style={styles.listContainer} {...ANIMATABLE_CONFIG}>
+        <FlatList
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
+          data={launchListItems}
+          renderItem={renderItem}
+        />
+      </Animatable.View>
     </>
   );
 };
@@ -34,9 +40,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     ...STYLES.TITLE_34_MEDIUM,
   },
+  listContainer: {
+    flex: 1,
+  },
   list: {
-    paddingTop: 36,
     paddingHorizontal: 16,
+  },
+  listContent: {
+    paddingTop: 33,
+    paddingBottom: 21,
   },
 });
 
