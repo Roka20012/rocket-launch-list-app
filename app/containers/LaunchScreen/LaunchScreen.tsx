@@ -131,7 +131,13 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
   if (isLaunchListLoading)
     return <ActivityIndicator style={styles.activityIndicator} />;
 
-  if (isError) return <ErrorMessage message={launchListError?.detail} />;
+  if (isError)
+    return (
+      <ErrorMessage
+        message={launchListError?.detail}
+        onPress={onGetNewListItems}
+      />
+    );
 
   if (!launchListItems.length)
     return <EmptyBox onGetNewListItems={onGetNewListItems} />;
