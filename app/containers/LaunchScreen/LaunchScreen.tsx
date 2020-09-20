@@ -25,7 +25,7 @@ const launchListPhaseSelector = (state: AppState) =>
 const launchListErrorSelector = (state: AppState) =>
   state.launchListStore.launchListError;
 
-const LaunchScreen = ({ navigation }: HomeScreenProps<'Home'>) => {
+const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const launchList = useSelector(launchListSelector);
@@ -93,8 +93,7 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'Home'>) => {
     setIsError,
   ]);
 
-  // const goToMissionDetailScreen = () => navigation.navigate('MissionDetail');
-  const goToMissionDetailScreen = () => console.log('Hello');
+  const goToLauchDetailScreen = () => navigation.navigate('LaunchDetailScreen');
 
   if (isLaunchListLoading)
     return <ActivityIndicator style={styles.activityIndicator} />;
@@ -106,7 +105,7 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'Home'>) => {
       <OnlineStatus style={styles.onlineStatus} online={online} />
       <LaunchList
         launchListItems={launchList?.results}
-        onPress={goToMissionDetailScreen}
+        onPress={goToLauchDetailScreen}
       />
     </View>
   );
