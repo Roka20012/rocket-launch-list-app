@@ -92,7 +92,8 @@ const LaunchScreen = () => {
   if (isLaunchListLoading)
     return <ActivityIndicator style={styles.activityIndicator} />;
 
-  if (isError) return <ErrorMessage message={launchListError?.detail} />;
+  // TODO: uncomment
+  // if (isError) return <ErrorMessage message={launchListError?.detail} />;
 
   return (
     <View style={[styles.container, { marginTop: insets.top }]}>

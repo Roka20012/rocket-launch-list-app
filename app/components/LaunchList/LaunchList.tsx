@@ -6,7 +6,7 @@ import * as Animatable from 'react-native-animatable';
 import { ANIMATABLE_CONFIG } from '~/app/common/constants';
 import { LaunchListType, LaunchListItemType } from '~/app/store/types';
 
-import { LaunchItem, LaunchListHeader } from './parts';
+import { LaunchItem, LaunchListHeader, EmptyBox } from './parts';
 
 export type LaunchListProps = {
   launchListItems?: LaunchListType['results'];
@@ -17,18 +17,20 @@ const LaunchList = ({ launchListItems = [] }: LaunchListProps) => {
     <LaunchItem item={item} />
   );
 
+  if (!launchListItems.length) {
+    return <EmptyBox />;
+  }
+
   return (
-    <>
-      <Animatable.View style={styles.listContainer} {...ANIMATABLE_CONFIG}>
-        <FlatList
-          style={styles.list}
-          ListHeaderComponent={LaunchListHeader}
-          contentContainerStyle={styles.listContent}
-          data={launchListItems}
-          renderItem={renderItem}
-        />
-      </Animatable.View>
-    </>
+    <Animatable.View style={styles.listContainer} {...ANIMATABLE_CONFIG}>
+      <FlatList
+        style={styles.list}
+        ListHeaderComponent={LaunchListHeader}
+        contentContainerStyle={styles.listContent}
+        data={launchListItems}
+        renderItem={renderItem}
+      />
+    </Animatable.View>
   );
 };
 
