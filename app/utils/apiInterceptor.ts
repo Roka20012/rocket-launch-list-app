@@ -1,5 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { BASE_URL } from '@env';
+import { BASE_URL } from 'react-native-dotenv';
 
 const client = axios.create({
   baseURL: BASE_URL,

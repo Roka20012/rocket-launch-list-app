@@ -5,20 +5,21 @@ import { Dispatch, AnyAction, Action } from 'redux';
 import { createRoutine } from 'redux-routines';
 
 import * as api from './api';
+
 import { REQUEST_PHASE } from '~/app/common/types';
+import { LaunchListType } from '~/app/store/types';
 
 export const getLaunchListActions = createRoutine('launch/getLaunchList');
 
 // State
 export type LaunchListState = {
-  launchList: null;
+  launchList: LaunchListType | [];
   launchListPhase: REQUEST_PHASE;
   launchListError: AxiosError | null;
 };
 
 const initialState: LaunchListState = {
-  // TODO: @Rostyk add type for launchList
-  launchList: null,
+  launchList: [],
   launchListPhase: REQUEST_PHASE.INIT,
   launchListError: null,
 };
@@ -40,7 +41,7 @@ const launchListStore = (
       return {
         ...state,
         launchListPhase: REQUEST_PHASE.SUCCESS,
-        launchList: payload.launchList,
+        launchList: payload,
       };
     case getLaunchListActions.FAILURE:
       return {
