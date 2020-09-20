@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { HomeScreenProps } from '~/app/navigation/types';
 
@@ -8,9 +9,9 @@ const LaunchDetailScreen = ({
   route,
 }: HomeScreenProps<'LaunchDetailScreen'>) => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>LaunchDetailScreen</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 

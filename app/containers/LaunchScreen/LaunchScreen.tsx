@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, ActivityIndicator, View } from 'react-native';
+import { StyleSheet, ActivityIndicator, View, StatusBar } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import { AppState } from '~/app/store/types';
 
 import { HomeScreenProps } from '~/app/navigation/types';
 
-import { OnlineStatus } from './parts';
+import { OnlineStatus, OnlineStatusType } from './parts';
 
 import {
   getLaunchList,
@@ -32,17 +32,17 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
   const launchListPhase = useSelector(launchListPhaseSelector);
   const launchListError = useSelector(launchListErrorSelector);
 
-  const [online, setOnline] = useState<boolean>(false);
+  const [online, setOnline] = useState<OnlineStatusType>('checking-connection');
   const [isError, setIsError] = useState<boolean>(false);
   const [isLaunchListLoading, setIsLaunchListLoading] = useState<boolean>(true);
-  const connectInterval = useRef();
+  let connectInterval: NodeJS.Timeout;
 
   const [websocket, setWebsocket] = useState<WebSocket>();
 
   useEffect(() => {
     connect();
 
-    return () => clearTimeout(connectInterval.current);
+    return () => clearTimeout(connectInterval);
   }, []);
 
   const connect = () => {
@@ -51,21 +51,21 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
 
     ws.onopen = () => {
       setWebsocket(ws);
-      setOnline(true);
+      setOnline('online');
 
       timeout = 250; // reset timer to 250 on open of websocket connection
-      clearTimeout(connectInterval.current); // clear Interval on on open of websocket connection
+      clearTimeout(connectInterval); // clear Interval on on open of websocket connection
     };
 
     ws.onclose = () => {
-      setOnline(false);
+      setOnline('offline');
 
       timeout += timeout; //increment retry interval
-      connectInterval.current = setTimeout(check, Math.min(10000, timeout)); //call check function after timeout
+      connectInterval = setTimeout(check, Math.min(10000, timeout)); //call check function after timeout
     };
 
     ws.onerror = () => {
-      setOnline(false);
+      setOnline('offline');
       ws.close();
     };
   };
@@ -102,6 +102,7 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
 
   return (
     <View style={[styles.container, { marginTop: insets.top }]}>
+      <StatusBar barStyle="dark-content" />
       <OnlineStatus style={styles.onlineStatus} online={online} />
       <LaunchList
         launchListItems={launchList?.results}
