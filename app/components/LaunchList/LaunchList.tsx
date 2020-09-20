@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, FlatList } from 'react-native';
+import { StyleSheet, Text, FlatList, View } from 'react-native';
 
 import * as Animatable from 'react-native-animatable';
 
-import { STYLES } from '~/app/common/style';
+import { COLORS, STYLES } from '~/app/common/style';
 import { ANIMATABLE_CONFIG } from '~/app/common/constants';
 import { LaunchListType, LaunchListItemType } from '~/app/store/types';
 
@@ -20,7 +20,14 @@ const LaunchList = ({ launchListItems = [] }: LaunchListProps) => {
 
   return (
     <>
-      <Text style={styles.listTitle}>Launch List</Text>
+      <View style={styles.header}>
+        <Text style={styles.listTitle}>Launch List</Text>
+        {true ? (
+          <Text style={styles.onlineStatus}>online ·</Text>
+        ) : (
+          <Text style={styles.offlineStatus}>offline</Text>
+        )}
+      </View>
       <Animatable.View style={styles.listContainer} {...ANIMATABLE_CONFIG}>
         <FlatList
           style={styles.list}
@@ -34,11 +41,23 @@ const LaunchList = ({ launchListItems = [] }: LaunchListProps) => {
 };
 
 const styles = StyleSheet.create({
-  listTitle: {
+  header: {
     marginTop: 23,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  listTitle: {
     paddingHorizontal: 16,
     textAlign: 'center',
     ...STYLES.TITLE_34_MEDIUM,
+  },
+  onlineStatus: {
+    ...STYLES.BODY_15_MEDIUM,
+    color: COLORS.BUTTON_ACTIVE,
+  },
+  offlineStatus: {
+    ...STYLES.BODY_15_MEDIUM,
+    color: COLORS.TEXT_ERROR,
   },
   listContainer: {
     flex: 1,
