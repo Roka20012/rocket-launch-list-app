@@ -9,13 +9,17 @@ import { ANIMATABLE_CONFIG } from '~/app/common/constants';
 import { STYLES, COLORS } from '~/app/common/style';
 import Ani from './errorAnimation.json';
 
-const ErrorMessage = () => {
+export type ErrorMessageType = {
+  message?: string;
+};
+
+const ErrorMessage = ({ message }: ErrorMessageType) => {
   return (
     <SafeAreaView style={styles.errorContainer}>
       <Animatable.View {...ANIMATABLE_CONFIG}>
         <LottieView style={styles.animation} source={Ani} autoPlay loop />
         <Text style={styles.error}>Something went wrong...</Text>
-        <Text style={styles.errorSmall}>We are working on it...</Text>
+        {!!message && <Text style={styles.errorSmall}>{message}</Text>}
       </Animatable.View>
     </SafeAreaView>
   );

@@ -7,7 +7,11 @@ export type AppState = {
 export type LaunchListStore = {
   launchList: LaunchListType | null;
   launchListPhase: REQUEST_PHASE;
-  launchListError: null;
+  launchListError: LaunchListErrorType | null;
+};
+
+export type LaunchListErrorType = {
+  detail: string;
 };
 
 export type LaunchListType = {

@@ -1,7 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, Text, StyleProp, ViewStyle } from 'react-native';
+
+import * as Animatable from 'react-native-animatable';
 
 import { STYLES, COLORS } from '~/app/common/style';
+import { ANIMATABLE_CONFIG } from '~/app/common/constants';
 
 export type OnlineStatusProps = {
   online: boolean;
@@ -9,14 +12,18 @@ export type OnlineStatusProps = {
 };
 
 const OnlineStatus = ({ online, style }: OnlineStatusProps) => {
-  return (
-    <View style={style}>
-      {online ? (
+  if (online) {
+    return (
+      <Animatable.View style={style} {...ANIMATABLE_CONFIG}>
         <Text style={styles.onlineStatus}>online</Text>
-      ) : (
-        <Text style={styles.offlineStatus}>offline</Text>
-      )}
-    </View>
+      </Animatable.View>
+    );
+  }
+
+  return (
+    <Animatable.View style={style} {...ANIMATABLE_CONFIG}>
+      <Text style={styles.offlineStatus}>offline</Text>
+    </Animatable.View>
   );
 };
 

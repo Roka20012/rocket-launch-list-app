@@ -7,7 +7,7 @@ import { createRoutine } from 'redux-routines';
 import * as api from './api';
 
 import { REQUEST_PHASE } from '~/app/common/types';
-import { LaunchListType } from '~/app/store/types';
+import { LaunchListType, LaunchListErrorType } from '~/app/store/types';
 
 export const getLaunchListActions = createRoutine('launch/getLaunchList');
 
@@ -15,7 +15,7 @@ export const getLaunchListActions = createRoutine('launch/getLaunchList');
 export type LaunchListState = {
   launchList: LaunchListType | [];
   launchListPhase: REQUEST_PHASE;
-  launchListError: AxiosError | null;
+  launchListError: LaunchListErrorType | null;
 };
 
 const initialState: LaunchListState = {

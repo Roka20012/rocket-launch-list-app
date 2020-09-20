@@ -20,12 +20,15 @@ const launchListSelector = (state: AppState) =>
   state.launchListStore.launchList;
 const launchListPhaseSelector = (state: AppState) =>
   state.launchListStore.launchListPhase;
+const launchListErrorSelector = (state: AppState) =>
+  state.launchListStore.launchListError;
 
 const LaunchScreen = () => {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const launchList = useSelector(launchListSelector);
   const launchListPhase = useSelector(launchListPhaseSelector);
+  const launchListError = useSelector(launchListErrorSelector);
 
   const [online, setOnline] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -78,7 +81,6 @@ const LaunchScreen = () => {
     } else if (launchListPhase === REQUEST_PHASE.FAILURE) {
       setIsError(true);
       setIsLaunchListLoading(false);
-      dispatch(getLaunchListFulfill());
     }
   }, [
     setIsLaunchListLoading,
@@ -90,7 +92,7 @@ const LaunchScreen = () => {
   if (isLaunchListLoading)
     return <ActivityIndicator style={styles.activityIndicator} />;
 
-  if (isError) return <ErrorMessage />;
+  if (isError) return <ErrorMessage message={launchListError?.detail} />;
 
   return (
     <View style={[styles.container, { marginTop: insets.top }]}>
