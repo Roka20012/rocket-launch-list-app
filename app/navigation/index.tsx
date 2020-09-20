@@ -24,6 +24,7 @@ export const RootStack = () => {
         <Stack.Screen
           name="LaunchDetailScreen"
           component={LaunchDetailScreen}
+          options={{ title: 'Launch Detail' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

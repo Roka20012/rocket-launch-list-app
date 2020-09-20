@@ -59,7 +59,19 @@ export type LaunchListItemType = {
       variant: string;
     };
   };
-  mission: null;
+  mission: {
+    id: number;
+    launch_library_id: number;
+    name: string;
+    description: string;
+    launch_designator: null;
+    type: string;
+    orbit: {
+      id: number;
+      name: string;
+      abbrev: string;
+    };
+  } | null;
   pad: {
     id: number;
     url: string;

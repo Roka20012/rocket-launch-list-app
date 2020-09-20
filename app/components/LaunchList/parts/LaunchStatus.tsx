@@ -13,6 +13,7 @@ const LaunchStatus = ({ name, success }: LaunchStatusProps) => (
     Status:{' '}
     <Text style={success ? styles.statusSuccess : styles.statusFailure}>
       {name}
+      {success ? ' ✅' : ' ❌'}
     </Text>
   </Text>
 );
