@@ -1,11 +1,18 @@
 import React from 'react';
-import { Text, SafeAreaView } from 'react-native';
+import { Provider } from 'react-redux';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import LaunchScreen from '~/app/containers/LaunchScreen';
+
+import store from '~/app/store';
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <Text>Engine: Hermes</Text>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <LaunchScreen />
+      </SafeAreaProvider>
+    </Provider>
   );
 };
 
