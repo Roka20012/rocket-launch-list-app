@@ -1,14 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+
+import RightArrow from '~/app/common/components/RightArrow';
+
+import LaunchStatus from './LaunchStatus';
 
 import { LaunchListItemType } from '~/app/store/types';
 import { COLORS, STYLES } from '~/app/common/style';
 
 export type LaunchItemProps = {
   item: LaunchListItemType;
+  onPress: () => void;
 };
 
-const LaunchItem = ({ item }: LaunchItemProps) => {
+const LaunchItem = ({ item, onPress }: LaunchItemProps) => {
   const {
     name,
     status: { name: statusName },
@@ -17,46 +22,38 @@ const LaunchItem = ({ item }: LaunchItemProps) => {
   const isStatusSuccess = statusName === 'Success';
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.status}>
-        Status:{' '}
-        <Text
-          style={isStatusSuccess ? styles.statusSuccess : styles.statusFailure}
-        >
-          {statusName}
-        </Text>
-      </Text>
-      {!!failreason && (
-        <Text style={styles.reason}>
-          Reason: <Text style={styles.failreason}>{failreason}</Text>
-        </Text>
-      )}
+    <>
+      <TouchableOpacity style={styles.container} onPress={onPress}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.name}>{name}</Text>
+          <LaunchStatus success={isStatusSuccess} name={statusName} />
+          {!!failreason && (
+            <Text style={styles.reason}>
+              Reason: <Text style={styles.failreason}>{failreason}</Text>
+            </Text>
+          )}
+        </View>
+        <RightArrow />
+      </TouchableOpacity>
       <View style={styles.divider} />
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 17,
+    paddingVertical: 17,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  contentContainer: {
+    flex: 0.9,
   },
   name: {
     marginBottom: 6,
     ...STYLES.BODY_15_MEDIUM,
     color: COLORS.TEXT_MAIN,
-  },
-  status: {
-    ...STYLES.BODY_15_REGULAR,
-    color: COLORS.TEXT_MAIN,
-  },
-  statusSuccess: {
-    ...STYLES.BODY_15_MEDIUM,
-    color: COLORS.BUTTON_ACTIVE,
-  },
-  statusFailure: {
-    ...STYLES.BODY_15_MEDIUM,
-    color: COLORS.TEXT_ERROR,
   },
   reason: {
     marginTop: 6,
@@ -66,7 +63,6 @@ const styles = StyleSheet.create({
     color: COLORS.TEXT_HINT,
   },
   divider: {
-    marginTop: 17,
     borderWidth: 0.5,
     borderColor: COLORS.TEXT_HINT,
   },

@@ -19,13 +19,15 @@ const EmptyBox = () => {
 const styles = StyleSheet.create({
   emptyListContainer: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
   },
   emptyListTitleContainer: {
-    paddingVertical: 80,
-    marginHorizontal: 16,
-    paddingHorizontal: 70,
+    paddingVertical: 90,
+    marginHorizontal: 31,
+    flexGrow: 1,
     alignSelf: 'center',
+    alignItems: 'center',
     backgroundColor: COLORS.FIELD_DEFAULT,
     borderRadius: 15,
   },

@@ -9,12 +9,13 @@ import { LaunchListType, LaunchListItemType } from '~/app/store/types';
 import { LaunchItem, LaunchListHeader, EmptyBox } from './parts';
 
 export type LaunchListProps = {
+  onPress: () => void;
   launchListItems?: LaunchListType['results'];
 };
 
-const LaunchList = ({ launchListItems = [] }: LaunchListProps) => {
+const LaunchList = ({ launchListItems = [], onPress }: LaunchListProps) => {
   const renderItem = ({ item }: { item: LaunchListItemType }) => (
-    <LaunchItem item={item} />
+    <LaunchItem item={item} onPress={onPress} />
   );
 
   if (!launchListItems.length) {

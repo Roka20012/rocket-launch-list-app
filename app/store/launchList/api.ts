@@ -813,7 +813,7 @@ export const getLaunchList = async (): Promise<LaunchListType> => {
       ],
     };
 
-    return response.data;
+    // return response.data;
     return mockResponse;
   } catch (error) {
     throw error;

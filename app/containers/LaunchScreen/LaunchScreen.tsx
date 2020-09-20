@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { StyleSheet, ActivityIndicator, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -6,16 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ErrorMessage from '~/app/common/components/ErrorMessage';
 import LaunchList from '~/app/components/LaunchList';
+import { AppState } from '~/app/store/types';
+
+import { HomeScreenProps } from '~/app/navigation/types';
+
 import { OnlineStatus } from './parts';
 
-import { AppState } from '~/app/store/types';
 import {
   getLaunchList,
   getLaunchListFulfill,
 } from '~/app/store/launchList/duck';
 
 import { REQUEST_PHASE } from '~/app/common/types';
-
 const launchListSelector = (state: AppState) =>
   state.launchListStore.launchList;
 const launchListPhaseSelector = (state: AppState) =>
@@ -23,7 +25,7 @@ const launchListPhaseSelector = (state: AppState) =>
 const launchListErrorSelector = (state: AppState) =>
   state.launchListStore.launchListError;
 
-const LaunchScreen = () => {
+const LaunchScreen = ({ navigation }: HomeScreenProps<'Home'>) => {
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const launchList = useSelector(launchListSelector);
@@ -33,16 +35,18 @@ const LaunchScreen = () => {
   const [online, setOnline] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [isLaunchListLoading, setIsLaunchListLoading] = useState<boolean>(true);
+  const connectInterval = useRef();
 
   const [websocket, setWebsocket] = useState<WebSocket>();
 
   useEffect(() => {
     connect();
+
+    return () => clearTimeout(connectInterval.current);
   }, []);
 
   const connect = () => {
     const ws = new WebSocket('wss://echo.websocket.org/');
-    let connectInterval: NodeJS.Timeout;
     let timeout = 250;
 
     ws.onopen = () => {
@@ -50,14 +54,14 @@ const LaunchScreen = () => {
       setOnline(true);
 
       timeout = 250; // reset timer to 250 on open of websocket connection
-      clearTimeout(connectInterval); // clear Interval on on open of websocket connection
+      clearTimeout(connectInterval.current); // clear Interval on on open of websocket connection
     };
 
     ws.onclose = () => {
       setOnline(false);
 
       timeout += timeout; //increment retry interval
-      connectInterval = setTimeout(check, Math.min(10000, timeout)); //call check function after timeout
+      connectInterval.current = setTimeout(check, Math.min(10000, timeout)); //call check function after timeout
     };
 
     ws.onerror = () => {
@@ -89,16 +93,21 @@ const LaunchScreen = () => {
     setIsError,
   ]);
 
+  // const goToMissionDetailScreen = () => navigation.navigate('MissionDetail');
+  const goToMissionDetailScreen = () => console.log('Hello');
+
   if (isLaunchListLoading)
     return <ActivityIndicator style={styles.activityIndicator} />;
 
-  // TODO: uncomment
-  // if (isError) return <ErrorMessage message={launchListError?.detail} />;
+  if (isError) return <ErrorMessage message={launchListError?.detail} />;
 
   return (
     <View style={[styles.container, { marginTop: insets.top }]}>
       <OnlineStatus style={styles.onlineStatus} online={online} />
-      <LaunchList launchListItems={launchList?.results} />
+      <LaunchList
+        launchListItems={launchList?.results}
+        onPress={goToMissionDetailScreen}
+      />
     </View>
   );
 };
