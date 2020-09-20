@@ -7,6 +7,7 @@ module.exports = {
     'prettier/@typescript-eslint',
     'prettier/react',
     '@typescript-eslint',
+    'plugin:react-hooks/recommended',
   ],
   parserOptions: {
     project: './tsconfig.json',
@@ -16,6 +17,9 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     // TS compiler will take care of this
     'default-case': 'off',
+
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
 
     // opinions:
     'max-lines-per-function': ['error', 90],
