@@ -16,9 +16,15 @@
 ## ✅ To run project
 > `npm install && npm run pod && npm run ios`
 
-Result:
+
 
 ## States 
+## **Roadmap**
+- [Simple loader animation](#when-error-happens)
+- [Clock](#when-launch-list-is-empty)
+- [Dot's Loader](#when-everything-fine)
+
+
 ### When error happens
 
 ![simple-loader](./gifs/1.gif)
