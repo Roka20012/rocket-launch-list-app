@@ -52,7 +52,7 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
     connect();
 
     return () => clearTimeout(connectInterval);
-  }, []);
+  }, [connect, connectInterval]);
 
   const connect = () => {
     const ws = new WebSocket('wss://echo.websocket.org/');
@@ -80,12 +80,12 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
   };
 
   const check = () => {
-    if (!websocket || websocket.readyState == WebSocket.CLOSED) connect();
+    if (!websocket || websocket.readyState === WebSocket.CLOSED) connect();
   };
 
   useEffect(() => {
     dispatch(getLaunchList());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (launchListPhase === REQUEST_PHASE.SUCCESS) {
@@ -102,10 +102,10 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
   }, [
     setIsLaunchListRefresing,
     setIsLaunchListLoading,
-    getLaunchListFulfill,
     setisLoadingMore,
     launchListPhase,
     setIsError,
+    dispatch,
   ]);
 
   const goToLauchDetailScreen = (
@@ -123,7 +123,6 @@ const LaunchScreen = ({ navigation }: HomeScreenProps<'LaunchScreen'>) => {
   };
 
   const getMoreListItems = () => {
-    console.log('onEndReached');
     setisLoadingMore(true);
     dispatch(getLaunchList(launchList?.next));
   };
