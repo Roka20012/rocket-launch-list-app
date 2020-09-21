@@ -18,18 +18,17 @@
 
 
 
-## States 
-## **Roadmap**
 - [Launch List APP](#launch-list-app)
   - [✅ Was done with](#-was-done-with)
   - [✅ API Swagger](#-api-swagger)
   - [✅ To run project](#-to-run-project)
-  - [States](#states)
-  - [**Roadmap**](#roadmap)
+  - [App States](#app-states)
     - [When error happens](#when-error-happens)
     - [When launch list is empty](#when-launch-list-is-empty)
     - [When everything fine](#when-everything-fine)
 
+
+## App States 
 
 ### When error happens
 
