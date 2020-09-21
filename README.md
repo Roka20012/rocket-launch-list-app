@@ -1,4 +1,15 @@
 # Launch List APP
+
+- [Launch List APP](#launch-list-app)
+  - [✅ Was done with](#-was-done-with)
+  - [✅ API Swagger](#-api-swagger)
+  - [✅ To run project](#-to-run-project)
+  - [App States](#app-states)
+    - [When error happens](#when-error-happens)
+    - [When launch list is empty](#when-launch-list-is-empty)
+    - [When everything fine](#when-everything-fine)
+
+
 ## ✅ Was done with
 -  ### React Native ⚛️ [Documentation](https://reactnative.dev/docs/getting-started)
 -  ### Websockets using this [website](https://websocket.org/echo.html)
@@ -15,17 +26,6 @@
 
 ## ✅ To run project
 > `npm install && npm run pod && npm run ios`
-
-
-
-- [Launch List APP](#launch-list-app)
-  - [✅ Was done with](#-was-done-with)
-  - [✅ API Swagger](#-api-swagger)
-  - [✅ To run project](#-to-run-project)
-  - [App States](#app-states)
-    - [When error happens](#when-error-happens)
-    - [When launch list is empty](#when-launch-list-is-empty)
-    - [When everything fine](#when-everything-fine)
 
 
 ## App States 
