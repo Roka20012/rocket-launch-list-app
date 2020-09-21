@@ -20,9 +20,15 @@
 
 ## States 
 ## **Roadmap**
-- [Simple loader animation](#when-error-happens)
-- [Clock](#when-launch-list-is-empty)
-- [Dot's Loader](#when-everything-fine)
+- [Launch List APP](#launch-list-app)
+  - [✅ Was done with](#-was-done-with)
+  - [✅ API Swagger](#-api-swagger)
+  - [✅ To run project](#-to-run-project)
+  - [States](#states)
+  - [**Roadmap**](#roadmap)
+    - [When error happens](#when-error-happens)
+    - [When launch list is empty](#when-launch-list-is-empty)
+    - [When everything fine](#when-everything-fine)
 
 
 ### When error happens
