@@ -25,7 +25,7 @@ export type LaunchListType = {
 export type LaunchListItemType = {
   id: string;
   url: string;
-  launch_library_id: number;
+  launch_library_id: number | null;
   slug: string;
   name: string;
   status: {
@@ -39,20 +39,20 @@ export type LaunchListItemType = {
   tbdtime: boolean;
   tbddate: boolean;
   probability: number;
-  holdreason: string;
-  failreason: string;
-  hashtag: string;
+  holdreason: string | null;
+  failreason: string | null;
+  hashtag: string | null;
   launch_service_provider: {
-    id: number;
-    url: string;
-    name: string;
-    type: string;
+    id: number | null;
+    url: string | null;
+    name: string | null;
+    type: string | null;
   };
   rocket: {
     id: number;
     configuration: {
       id: number;
-      launch_library_id: number;
+      launch_library_id: number | null;
       url: string;
       name: string;
       family: string;
@@ -62,11 +62,11 @@ export type LaunchListItemType = {
   };
   mission: {
     id: number;
-    launch_library_id: number;
+    launch_library_id: number | null;
     name: string;
     description: string;
     launch_designator: null;
-    type: string;
+    type: string | null;
     orbit: {
       id: number;
       name: string;
@@ -76,7 +76,7 @@ export type LaunchListItemType = {
   pad: {
     id: number;
     url: string;
-    agency_id: number;
+    agency_id: number | null;
     name: string;
     info_url: null | string;
     wiki_url: string;
@@ -96,7 +96,18 @@ export type LaunchListItemType = {
     total_launch_count: number;
   };
   webcast_live: false;
-  image: null;
+  image: string | null;
   infographic: null;
-  program: [];
+  program: Array<{
+    id: number;
+    url: string;
+    name: string;
+    description: string;
+    agencies: { id: number; url: string; name: string; type: string }[];
+    image_url: string;
+    start_date: string;
+    end_date: string;
+    info_url: string | null;
+    wiki_url: string;
+  }> | null;
 };

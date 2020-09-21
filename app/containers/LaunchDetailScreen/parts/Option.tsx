@@ -5,7 +5,7 @@ import { COLORS, STYLES } from '~/app/common/style';
 
 export type OptionProps = {
   title?: string;
-  option?: string | number;
+  option?: string | number | null;
   separator?: string | null;
 };
 
